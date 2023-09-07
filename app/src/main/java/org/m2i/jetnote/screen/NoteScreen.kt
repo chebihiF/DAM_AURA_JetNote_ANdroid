@@ -3,7 +3,10 @@ package org.m2i.jetnote.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import org.m2i.jetnote.R
 import org.m2i.jetnote.components.NoteButton
 import org.m2i.jetnote.components.NoteInputText
+import org.m2i.jetnote.components.NoteRow
+import org.m2i.jetnote.data.NoteDataSource
 import org.m2i.jetnote.model.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,6 +90,15 @@ fun NoteScreen(
                     description = ""
                 }
             })
+
+            Divider(modifier = Modifier.padding(10.dp))
+
+            LazyColumn{
+                items(notes){ note ->
+                    NoteRow(note = note, onNoteClicked = {})
+                }
+            }
+
         }
     }
 }
@@ -92,5 +106,5 @@ fun NoteScreen(
 @Preview(showBackground = true)
 @Composable
 fun NoteScreenPreview() {
-    NoteScreen(notes = emptyList(), onAddNote = {}, onRemoveNote = {})
+    NoteScreen(notes = NoteDataSource().leadNotes(), onAddNote = {}, onRemoveNote = {})
 }
