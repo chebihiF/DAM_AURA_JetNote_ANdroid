@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.m2i.jetnote.R
+import org.m2i.jetnote.components.NoteInputText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +30,8 @@ fun NoteScreen(){
 
     { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-
+            NoteInputText(text = "hello", label = "hello",
+                onTextChange = {})
         }
     }
 }
