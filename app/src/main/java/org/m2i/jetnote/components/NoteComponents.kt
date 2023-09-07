@@ -32,7 +32,7 @@ fun NoteInputText(
     val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
         value = text,
-        onValueChange = { onTextChange },
+        onValueChange =  onTextChange ,
         colors =  TextFieldDefaults.textFieldColors(
             containerColor = Color.Transparent),
         maxLines = maxLine,

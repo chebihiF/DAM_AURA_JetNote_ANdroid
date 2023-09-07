@@ -23,10 +23,15 @@ import androidx.compose.ui.unit.dp
 import org.m2i.jetnote.R
 import org.m2i.jetnote.components.NoteButton
 import org.m2i.jetnote.components.NoteInputText
+import org.m2i.jetnote.model.Note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteScreen(){
+fun NoteScreen(
+    notes: List<Note>,
+    onAddNote: (Note) -> Unit,
+    onRemoveNote: (Note) -> Unit
+){
 
     var title by remember {
         mutableStateOf("")
@@ -57,15 +62,29 @@ fun NoteScreen(){
                 modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
                 text = title,
                 label = "Title",
-                onTextChange = {})
+                onTextChange = {
+                    if(it.all {char ->
+                        char.isLetter() || char.isWhitespace()
+                        }) title = it
+                })
 
             NoteInputText(
                 modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
                 text = description,
                 label = "Add Note",
-                onTextChange = {})
+                onTextChange = {
+                    if(it.all {char ->
+                            char.isLetter() || char.isWhitespace()
+                        }) description = it
+                })
 
-            NoteButton(text = "Save", onClick = { /*TODO*/ })
+            NoteButton(text = "Save", onClick = {
+                if(title.isNotEmpty() && description.isNotEmpty()){
+                    // Save to the list
+                    title = ""
+                    description = ""
+                }
+            })
         }
     }
 }
@@ -73,5 +92,5 @@ fun NoteScreen(){
 @Preview(showBackground = true)
 @Composable
 fun NoteScreenPreview() {
-    NoteScreen()
+    NoteScreen(notes = emptyList(), onAddNote = {}, onRemoveNote = {})
 }
