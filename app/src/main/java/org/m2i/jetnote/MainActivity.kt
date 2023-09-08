@@ -12,8 +12,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.m2i.jetnote.model.Note
 import org.m2i.jetnote.screen.NoteScreen
+import org.m2i.jetnote.screen.NoteViewModel
 import org.m2i.jetnote.ui.theme.JetNoteTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,17 +23,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetNoteTheme {
-                val notes = remember {
-                    mutableStateListOf<Note>()
-                }
-                // A surface container using the 'background' color from the theme
-                NoteScreen(
-                    notes = notes,
-                    onAddNote = {notes.add(it)},
-                    onRemoveNote = {notes.remove(it)})
+                NotesApp()
             }
         }
     }
+}
+
+@Composable
+fun NotesApp(noteViewModel: NoteViewModel = viewModel()){
+    NoteScreen(
+        notes = noteViewModel.getAllNotes(),
+        onAddNote = {noteViewModel.addNote(it)},
+        onRemoveNote = {noteViewModel.removeNote(it)})
 }
 
 
