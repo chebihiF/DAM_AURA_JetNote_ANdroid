@@ -69,7 +69,7 @@ fun NoteButton(
     enabled: Boolean = true
 ){
     Button(
-        onClick = { onClick },
+        onClick = onClick ,
         shape = CircleShape,
         enabled = enabled,
         modifier = modifier) {
