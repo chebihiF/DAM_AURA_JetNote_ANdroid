@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,16 +24,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetNoteTheme {
-                NotesApp()
+                val noteViewModel = viewModel<NoteViewModel>()
+                NotesApp(noteViewModel)
             }
         }
     }
 }
 
 @Composable
-fun NotesApp(noteViewModel: NoteViewModel = viewModel()){
+fun NotesApp(noteViewModel: NoteViewModel){
+    val noteLis = noteViewModel.notesList.collectAsState().value
     NoteScreen(
-        notes = noteViewModel.getAllNotes(),
+        notes = noteLis,
         onAddNote = {noteViewModel.addNote(it)},
         onRemoveNote = {noteViewModel.removeNote(it)})
 }
